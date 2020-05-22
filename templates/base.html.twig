@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chez l'elfe noir</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('/css/style.css')}}">
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+    <header>
+        <div class="container text-center">
+            <a href="{{ path('accueil')}}">
+                <img src="{{ asset('/photo/logo.png')}}" alt="logo" />
+            </a>
+        </div>
+        <nav class="navbar navbar-expand-lg">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item mx-4">
+                        <a class="nav-link" href="{{ path('accueil')}}">Accueil</a>
+                    </li>
+                    <li class="nav-item mx-4 dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Boutique
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('produit')}}">Tous les produits</a>
+                            <!-- boucle categorie_produit -->
+                            <!-- fin boucle categorie_produit -->
+                        </div>
+                    </li>
+                    <li class="nav-item mx-4 dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Atelier
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('atelier')}}">Tous les ateliers</a>
+                            <!-- boucle categorie_cour -->
+                            <!-- fin boucle categorie_cour -->
+                        </div>
+                    </li>
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item mx-4">
+                        <a class="nav-link" href="{{ path('connexion') }}">Connexion</a>
+                    </li>
+                    <li class="nav-item mx-4 ">
+                        <a class="nav-link" href="{{ path('inscription') }}">Inscription</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item mx-4 dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i> {{app.user.username}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('profil') }}">Profil</a>
+                            <a class="dropdown-item" href="">Mes Commandes</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ path('deconnexion') }}">Deconnexion</a>
+                        </div>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item mx-4 ">
+                        <a class="nav-link" href=""><i class="fas fa-shopping-cart"></i></a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item mx-4 dropdown">
+                        <a class="nav-link dropdown-toggle" href="{{ path('admin_produit') }}" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cogs"></i> Gestion de la Boutique
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#"><i class="fas fa-users-cog"></i> Gestion des membres</a>
+                            <a class="dropdown-item" href="#">Gestion des commentaires</a>
+                            <a class="dropdown-item" href="#">Gestion des catégories</a>
+                            <a class="dropdown-item" href="{{ path ('admin_produit')}}">Gestion des produits</a>
+                            <a class="dropdown-item" href="{{ path ('admin_atelier')}}">Gestion des ateliers</a>
+                            <a class="dropdown-item" href="#">Gestion du stock</a>
+                            <a class="dropdown-item" href="#">Gestion des commandes</a>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="contenu">
+        <div class="container">
+            <div class="row">
+
+                <img class="colonne" src="{{ asset('/photo/haut_de_colonne.jpg')}}" alt="haut de colonne" />
+                <div class="contenu_gauche col-sm-2">
+                    <form class="form-inline my-4 mx-3 recherche">
+                        <img src="{{ asset('/photo/recherche.gif')}}" alt="Recherche" />
+                        <input class="form-control col-sm-9" type="search" placeholder="" aria-label="Search">
+                        <button class="" type="submit"><img src="{{ asset('/photo/bouton_recherche.gif')}}"
+                                alt="bouton recherche" /></button>
+                        <img src="{{ asset('/photo/bas_de_parchemin.gif')}}" alt="bas de parchemin" />
+                    </form>
+                    <div class="row my-4 mx-3 menu_gauche">
+                        <img src="{{ asset('/photo/haut_de_parchemin.gif')}}" alt="haut de parchemin" />
+                        {% block contenu_gauche %}{% endblock %}
+                        <img src="{{ asset('/photo/bas_de_parchemin.gif')}}" alt="bas de parchemin" />
+                    </div> <!-- div row -->
+                </div> <!-- div contenu_gauche -->
+                <div class="contenu_central col-sm-8 text-light">
+                    <div class="row">
+                        <img class="colonne" src="{{ asset('/photo/herse.jpg')}}" alt="herse" />
+                    </div>
+                    {% for message in app.flashes('success')  %}
+            <div class="alert alert-success">{{ message | raw }}</div>     <!-- raw permet d'interpreter les balises html -->
+        {% endfor %}
+        {% for message in app.flashes('errors')  %}
+            <div class="alert alert-danger">{{ message | raw }}</div>
+        {% endfor %}
+                    {% block contenu_central %}{% endblock %}
+                </div>
+                <div class="contenu_droit col-sm-2">
+                    <div class="row my-4 mx-3">
+                        <img src="{{ asset('/photo/haut_de_parchemin.gif')}}" alt="haut de parchemin" />
+                        <a href="https://www.facebook.com/"><img src="{{ asset('/photo/bloc_fb.jpg')}}"
+                                alt="facebook" /></a>
+                        <img src="{{ asset('/photo/bas_de_parchemin.gif')}}" alt="bas de parchemin" />
+                    </div>
+                    <div class="row my-4 mx-3">
+                        <img src="{{ asset('/photo/haut_de_parchemin.gif')}}" alt="haut de parchemin" />
+                        <a href="{{ path('contact')}}"><img src="{{ asset('/photo/bloc_conseil.jpg')}}"
+                                alt="conseil" /></a>
+                        <img src="{{ asset('/photo/bas_de_parchemin.gif')}}" alt="bas de parchemin" />
+                    </div>
+                    <div class="row my-4 mx-3">
+                        <img src="{{ asset('/photo/haut_de_parchemin.gif')}}" alt="haut de parchemin" />
+                        <a href="https://www.google.com/maps/d/edit?mid=z2nEv5wksE2M.knV_JClU5qp0"><img
+                                src="{{ asset('/photo/bloc_fightclubs.jpg')}}" alt="fightclubs" /></a>
+                        <img src="{{ asset('/photo/bas_de_parchemin.gif')}}" alt="bas de parchemin" />
+                    </div>
+                </div>
+                <img class="colonne" src="{{ asset('/photo/bas_de_colonne.jpg')}}" alt="bas de colonne" />
+            </div> <!-- div row -->
+        </div> <!-- div container -->
+    </div> <!-- div contenu -->
+    <footer>
+        <div class="contenu mt-3">
+            <div class="container">
+                <div class="row">
+                    <div class="footer_droit text-center col-sm-4">
+                        <a href="{{ path('cgv')}}">Conditions Générales de Ventes</a><br />
+                        <a href="{{ path('mentions-legales')}}">Mentions Légales</a><br />
+                        <a href="{{ path('politique-confidentialite')}}">Politique de Confidentialité</a><br />
+                    </div>
+                    <div class="footer_central col-sm-4 text-center text-light">
+                        &copy copyright 2020 Chez l'elfe noir <br /><br />
+                        <a href="{{ path('plan')}}">Plan du site</a>
+
+                    </div>
+                    <div class="footer_droit text-center col-sm-4">
+                        <a href="{{ path('contact')}}">Contact</a><br />
+                        <a href="{{ path('recrutement')}}">Recrutement</a><br />
+                        <a href="{{ path('qui-sommes-nous')}}">Qui Sommes-Nous ?</a><br />
+                    </div>
+                </div> <!-- div row -->
+            </div> <!-- div container -->
+        </div> <!-- div contenu -->
+
+    </footer>
+    {% block javascripts %}{% endblock %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="https://kit.fontawesome.com/b201c433c3.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

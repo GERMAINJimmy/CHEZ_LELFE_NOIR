@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% form_theme formCommentaire 'bootstrap_4_layout.html.twig' %}
+
+{% block contenu_central %}
+
+    <h1>
+        {% if editMode %}
+            Modifier le commentaire
+        {% else %}
+            Ajouter un commentaire
+        {% endif %}
+    </h1>
+
+    {{ form_start(formCommentaire) }}
+
+    {{ form_row (formCommentaire.note) }}<br>
+    {{ form_row (formCommentaire.message) }}<br>    
+
+
+    <button type="submit" class="btn bouton">
+        {% if editMode %}
+            Modifier le commentaire
+        {% else %}
+            Ajouter un commentaire
+        {% endif %}
+    </button>
+    
+    {{ form_end(formCommentaire) }}<br>
+{% endblock %}

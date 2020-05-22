@@ -1,0 +1,208 @@
+/* GENERALE */
+*
+{
+    color:#826004;
+}
+body
+{
+    background-color: black;
+}
+a
+{
+    color:#826004;
+}
+a:hover {
+    color: #B19100;
+    text-decoration: underline;
+}
+.bouton
+{
+    background-color: #EFE7BD;
+    color: #826004;
+    border-radius: 5px;
+    border:solid 2px #826004;
+}
+.formulaire
+{
+    color: #EFE7BD !important;
+}
+.form-group>label
+{
+    color: #EFE7BD !important;
+}
+.form-check>label
+{
+    color: #EFE7BD !important;
+}
+
+/* HEADER */
+header .container
+{
+    width: 100%;
+    height: 150px;
+}
+header img
+{
+    width: auto;
+    height: 150px;
+}
+nav
+{
+    background:black;
+    color: #826004;
+}
+.nav-link
+{
+    background-color: #EFE7BD;
+    border-radius: 5px;
+    border:solid 2px #826004;
+}
+.dropdown-item:hover
+{
+    background-color:#826004;
+    color: #EFE7BD;
+
+}
+.dropdown-menu
+{
+    background-color:#EFE7BD;
+    color: #826004;
+}
+.dropdown-item
+{
+    color: #826004;
+}
+.navbar-toggler-icon
+{
+    color: #826004;
+}
+
+
+/* CONTENU */
+
+.contenu_gauche,.contenu_droit
+{
+    background-image: url('../photo/bois.jpg');
+    background-size: contain;
+}
+.colonne{
+    width: 100%;
+}
+
+
+/* CONTENU GAUCHE */
+input
+{
+    width: 60%;
+}
+.recherche
+{
+    background-image: url('../photo/parchemin.gif');
+    background-size: contain;
+}
+form>img
+{
+    width:100%;
+    height:100%;
+    display:block;
+}
+.menu_gauche
+{
+    background-image: url('../photo/parchemin.gif');
+    background-size: contain;
+    text-overflow: initial;
+   overflow-wrap: break-word;
+}
+.menu_gauche>img
+{
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+/* CONTENU CENTRAL */
+.contenu_central
+{
+    background-image: url('../photo/fond_contenu_central.jpg');
+    background-size: contain;
+    overflow: auto;
+    overflow-wrap: break-word;
+}
+p
+{
+    width: 100%;
+}
+
+/* Index */
+.b_enluminure
+{
+    width: 116px;
+    height: 115px;
+    float: left;
+    margin-right: 5px;
+}
+.nouveaute
+{
+    background-image: url('../photo/parchemin.gif');
+    background-size: contain;
+
+}
+.nouveaute>img
+{
+    width:100%;
+    height:100%;
+    display:block;
+}
+.nouveaute>a
+{
+    padding: 5px;
+    border: solid 5px #826004;
+    border-radius: 5px;
+    display: flex;
+}
+.nouveaute>a>figure>img
+{
+    width:150px;
+    display:block;
+    height:auto;
+}
+/* CAROUSEL*/
+.carousel-item>img
+{
+    height: 300px;
+}
+/* CGV */
+.cgv
+{
+    background-image: url('../photo/parchemin.gif');
+    background-size: contain;
+    color: #826004;
+}
+/* CONTENU DROITE */
+.contenu_droit>div>img
+{
+    display: block;
+    width:100%;
+    height:100%;
+}
+.contenu_droit>div>a
+{
+    width:100%;
+}
+.contenu_droit>div>a>img
+{
+    display: block;
+    width:100%;
+    height:100%;
+}.contenu_droit>div>a>img
+{
+    display: block;
+}
+/* FOOTER GAUCHE */
+
+
+/* FOOTER CENTRAL */
+
+
+/* FOOTER DROITE */
+

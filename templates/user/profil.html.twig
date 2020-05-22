@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block contenu_central %}
+<div class="row nouveaute  my-4 mx-2">
+    <img class="mb-2" src="{{ asset('/photo/haut_grand_parchemin.jpg')}}" alt="nouveaute" />
+    <div class="col-md-4 offset-md-1">
+        <h2>{{ app.user.username }}</h2><br>
+        <a href="#" class="btn bouton d-block mx-auto">Modifier mes informations</a><br>
+        <a href="{{ path('produit')}}" class="btn bouton d-block mx-auto">Retour à la boutique</a>
+    </div>
+    <div class="col-md-3 offset-md-1">
+        <hr>
+            <p>{{ app.user.civilite }} {{ app.user.nom }} {{ app.user.prenom }}</p>
+            <p>{{ app.user.email }}</p>
+            <p>{{ app.user.telephone }}</p>
+            <p>{{ app.user.adresse }}</p>
+            <p>{{ app.user.codePostal }} {{ app.user.ville }}</p>
+        <hr>
+    </div>
+    <img class="mt-2" src="{{ asset('/photo/bas_nouveaute.jpg')}}" alt="bas de nouveaute" />
+</div>
+{% endblock %}

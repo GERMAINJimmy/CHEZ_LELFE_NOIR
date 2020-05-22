@@ -1,0 +1,33 @@
+easy_admin:
+    # On définit le nom de l'interface d'administration
+    site_name: 'Gestion de ma boutique'
+    # On définit l'affichage de l'utilisateur
+    user:
+        display_name: true
+        display_avatar: false
+    design:
+        # Ces lignes sont utiles pour CKEditor
+        form_theme:
+            - "@EasyAdmin/form/bootstrap_4.html.twig"
+            - "@FOSCKEditor/Form/ckeditor_widget.html.twig"
+        # Ces lignes définiront notre menu
+        menu:
+            - { label: 'Produits' }
+            - { entity: 'Produit', label: 'Produit', icon: 'book' }
+            - { label: 'Ateliers' }
+            - { entity: 'Atelier', label: 'Atelier', icon: 'book' }
+            - { label: 'Categorie' }
+            - { entity: 'Categorie', label: 'Catégorie', icon: 'tag' }
+            - { entity: 'SousCategorie', label: 'SousCategorie', icon: 'tag' }
+            - { label: 'Utilisateurs' }
+            - { entity: 'User', label: 'Utilisateurs', icon: 'user' }
+    formats:
+        # Ici on définit le format des dates
+        datetime: 'd/m/Y à H:i'
+    entities:
+        # List the entity class name you want to manage
+        - App\Entity\Produit
+        - App\Entity\Atelier
+        - App\Entity\Categorie
+        - App\Entity\SousCategorie
+        - App\Entity\User

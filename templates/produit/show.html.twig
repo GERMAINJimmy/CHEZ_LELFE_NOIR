@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block contenu_central %}
+<div class="row nouveaute  my-4 mx-2">
+    <img class="mb-2" src="{{ asset('/photo/haut_grand_parchemin.jpg')}}" alt="nouveaute" />
+    <div class="col-md-4 offset-md-1">
+        <h2>{{ produit.titre }}</h2>
+        <img src="http://placehold.it/900x1125" alt="{{ produit.titre }}" class="img-fluid">
+    </div>
+    <div class="col-md-3 offset-md-1">
+        <hr>
+     <!-- si le produit est en promotion on modifie son tarif -->
+        {% if  promotion.produit.id == produit.id %}
+        <p>Prix : {{ promotion.prix }} €</p>
+        {% else %}
+        <p>Prix : {{ produit.prix }} €</p>
+        {% endif %}
+        <p>Couleur : {{ produit.couleur }}</p>
+        <p>Taille : {{ produit.taille }}</p>
+        <p>Description : {{ produit.description | raw }}</p>
+        <hr>
+        <a href="{{ path('produit')}}" class="btn bouton d-block mx-auto">Retour à la boutique</a>
+    </div>
+    <img class="mt-2" src="{{ asset('/photo/bas_nouveaute.jpg')}}" alt="bas de nouveaute" />
+</div>
+{% endblock %}

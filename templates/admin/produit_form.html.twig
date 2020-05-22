@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% form_theme formProduit 'bootstrap_4_layout.html.twig' %}
+
+{% block contenu_central %}
+
+    <h1 class='formulaire'>
+        {% if editMode %}
+            Modifier le produit
+        {% else %}
+            Ajouter un Produit
+        {% endif %}
+    </h1><br>
+
+    {{form_start(formProduit)}}
+
+
+    {{ form_row (formProduit.reference)}}<br>
+    {{ form_row (formProduit.titre)}}<br>
+    {{ form_row (formProduit.couleur)}}<br>
+    {{ form_row (formProduit.public)}}<br>
+    {{ form_row (formProduit.description)}}<br>
+    {{ form_row (formProduit.photo)}}<br>
+    {{ form_row (formProduit.prix)}}<br>
+    {{ form_row (formProduit.stock)}}<br>
+    {{ form_row (formProduit.taille)}}<br>
+    {{ form_row (formProduit.slug)}}<br>
+
+    <button type="submit" class="btn bouton">
+        {% if editMode %}
+            Modifier le produit
+        {% else %}
+            Ajouter un Produit
+        {% endif %}
+    </button>
+    {{ form_end(formProduit) }}<br>
+
+    
+{% endblock %}
