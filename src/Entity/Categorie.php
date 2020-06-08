@@ -5,8 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategorieRepository")
@@ -35,20 +33,14 @@ class Categorie
     private $sousCategories;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProduitCategorie", mappedBy="categorie", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Atelier::class, mappedBy="categorie")
      */
-    private $produitCategories;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AtelierCategorie", mappedBy="categorie", orphanRemoval=true)
-     */
-    private $atelierCategories;
+    private $ateliers;
 
     public function __construct()
     {
         $this->sousCategories = new ArrayCollection();
-        $this->produitCategories = new ArrayCollection();
-        $this->atelierCategories = new ArrayCollection();
+        $this->ateliers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,70 +90,39 @@ class Categorie
 
         return $this;
     }
-
-    /**
-     * @return Collection|ProduitCategorie[]
-     */
-    public function getProduitCategories(): Collection
-    {
-        return $this->produitCategories;
-    }
-
-    public function addProduitCategory(ProduitCategorie $produitCategory): self
-    {
-        if (!$this->produitCategories->contains($produitCategory)) {
-            $this->produitCategories[] = $produitCategory;
-            $produitCategory->setCategorie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduitCategory(ProduitCategorie $produitCategory): self
-    {
-        if ($this->produitCategories->contains($produitCategory)) {
-            $this->produitCategories->removeElement($produitCategory);
-            // set the owning side to null (unless already changed)
-            if ($produitCategory->getCategorie() === $this) {
-                $produitCategory->setCategorie(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|AtelierCategorie[]
-     */
-    public function getAtelierCategories(): Collection
-    {
-        return $this->atelierCategories;
-    }
-
-    public function addAtelierCategory(AtelierCategorie $atelierCategory): self
-    {
-        if (!$this->atelierCategories->contains($atelierCategory)) {
-            $this->atelierCategories[] = $atelierCategory;
-            $atelierCategory->setCategorie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAtelierCategory(AtelierCategorie $atelierCategory): self
-    {
-        if ($this->atelierCategories->contains($atelierCategory)) {
-            $this->atelierCategories->removeElement($atelierCategory);
-            // set the owning side to null (unless already changed)
-            if ($atelierCategory->getCategorie() === $this) {
-                $atelierCategory->setCategorie(null);
-            }
-        }
-
-        return $this;
-    }
     public function __toString()
     {
         return $this->titre;
+    }
+
+    /**
+     * @return Collection|Atelier[]
+     */
+    public function getAteliers(): Collection
+    {
+        return $this->ateliers;
+    }
+
+    public function addAtelier(Atelier $atelier): self
+    {
+        if (!$this->ateliers->contains($atelier)) {
+            $this->ateliers[] = $atelier;
+            $atelier->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAtelier(Atelier $atelier): self
+    {
+        if ($this->ateliers->contains($atelier)) {
+            $this->ateliers->removeElement($atelier);
+            // set the owning side to null (unless already changed)
+            if ($atelier->getCategorie() === $this) {
+                $atelier->setCategorie(null);
+            }
+        }
+
+        return $this;
     }
 }

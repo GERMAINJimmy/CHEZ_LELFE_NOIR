@@ -95,8 +95,8 @@ class Commentaire
     public function __toString()
     {
         return $this->message;
-}
-
+    }
+    
     public function getDateModification(): ?\DateTimeInterface
     {
         return $this->dateModification;

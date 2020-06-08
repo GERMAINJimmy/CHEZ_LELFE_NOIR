@@ -20,4 +20,13 @@ class AtelierController extends AbstractController
             'ateliers' => $ateliers,
         ]);
     }
+    /**
+    * @Route("/atelier/{slug}", name="atelier_show")
+    */
+    public function show(atelier $atelier)
+    {
+        return $this->render('atelier/show.html.twig',[
+                'atelier' => $atelier,
+        ]);
+    }
 }

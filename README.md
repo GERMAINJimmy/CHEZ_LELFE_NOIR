@@ -1,6 +1,4 @@
 # chez_lelfe_noir
-SELECT c.titre FROM `produit_categorie` pc INNER JOIN `categorie` c ON c.id = pc.categorie_id GROUP BY c.titre
-
 reste a faire :
 
 administrateur ne peut pas ce deco

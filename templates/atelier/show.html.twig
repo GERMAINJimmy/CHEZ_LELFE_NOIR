@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block contenu_central %}
+<div class="row nouveaute  my-4 mx-2">
+    <img class="mb-2" src="{{ asset('/photo/haut_grand_parchemin.jpg')}}" alt="nouveaute" />
+    <div class="col-md-4 offset-md-1">
+        <h2>{{ atelier.titre }}</h2>
+        <img src="{{ vich_uploader_asset(atelier, 'imageFile') }}" alt="{{ atelier.titre }}" class="img-fluid">
+    </div>
+    <div class="col-md-3 offset-md-1">
+        <hr>
+        <p>Prix : {{ atelier.prix }}</p>
+        <p>Place : {{ atelier.place }}</p>
+        <p>Public : {{ atelier.public }}</p>
+        <p>Durée : {{ atelier.duree }}</p>
+        <p>Description : {{ atelier.description | raw }}</p>
+        <hr>
+        <a href="{{ path('atelier')}}" class="btn bouton d-block mx-auto">Retour à la boutique</a>
+    </div>
+    <img class="mt-2" src="{{ asset('/photo/bas_nouveaute.jpg')}}" alt="bas de nouveaute" />
+</div>
+{% endblock %}

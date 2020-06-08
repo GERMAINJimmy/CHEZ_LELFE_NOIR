@@ -2,7 +2,16 @@
 {% block contenu_central %}
 <div class="row nouveaute  my-4 mx-2">
     <img class="mb-2" src="{{ asset('/photo/haut_grand_parchemin.jpg')}}" alt="nouveaute" />
-
+        {% for atelier in ateliers %}
+        <a class="mx-1 my-2" href="{{ path('atelier_show', {'slug': atelier.slug}) }}">
+            <figure>
+                <img src="{{ vich_uploader_asset(atelier, 'imageFile') }}" alt="{{ atelier.titre }}">
+                <figcaption class="text-center">{{ atelier.titre }}<br>    
+                <p>{{ atelier.prix }} €</p>
+                </figcaption>
+            </figure>
+        </a>
+        {% endfor %}
     <img class="mt-2" src="{{ asset('/photo/bas_nouveaute.jpg')}}" alt="bas de nouveaute" />
 
 </div>

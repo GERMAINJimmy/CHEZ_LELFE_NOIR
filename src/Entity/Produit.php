@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Entity\ProduitCategorie;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
@@ -25,8 +24,9 @@ class Produit
     private $id;
 
     /**
+     * @Gedmo\Slug(fields={"titre"})
      * @ORM\Column(type="string", length=50)
-     * Assert\EqualTo("{{ $titre }}	")
+     * Assert\EqualTo("{{ $titre }}")
      */
     private $reference;
 
@@ -66,7 +66,7 @@ class Produit
     private $photo;
 
     /**
-     * @Vich\UploadableField(mapping="featured_images", fileNameProperty="featured_images")
+     * @Vich\UploadableField(mapping="photo", fileNameProperty="photo")
      * @var File
      */
     private $imageFile;
@@ -89,14 +89,9 @@ class Produit
     /**
      * @Gedmo\Slug(fields={"titre"})
      * @ORM\Column(length=128, unique=true)
-     * Assert\EqualTo("{{ $titre }}	")
+     * Assert\EqualTo("{{ $titre }}")
      */
     private $slug;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProduitCategorie", mappedBy="produit", orphanRemoval=true)
-     */
-    private $produitCategories;
 
     /**
      * @var \DateTime $dateEnregistrement
@@ -104,11 +99,6 @@ class Produit
      * @ORM\Column(type="datetime")
      */
     private $dateEnregistrement;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\ProduitCommande", mappedBy="produit")
-     */
-    private $produitCommandes;
 
     /**
      * @var \DateTime $dateModification
@@ -122,11 +112,20 @@ class Produit
      */
     private $promotions;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=SousCategorie::class, inversedBy="produits")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $sousCategorie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Commande::class, inversedBy="produit")
+     */
+    private $commande;
+
     public function __construct()
     {
         $this->dateEnregistrement = new \DateTime();
-        $this->produitCategories = new ArrayCollection();
-        $this->produitCommandes = new ArrayCollection();
         $this->promotions = new ArrayCollection();
     }
 
@@ -138,13 +137,6 @@ class Produit
     public function getReference(): ?string
     {
         return $this->reference;
-    }
-
-    public function setReference(string $reference): self
-    {
-        $this->reference = $reference;
-
-        return $this;
     }
 
     public function getTitre(): ?string
@@ -206,6 +198,7 @@ class Produit
 
         return $this;
     }
+
     public function getImageFile()
     {
         return $this->imageFile;
@@ -214,8 +207,8 @@ class Produit
     public function setImageFile(File $image = null)
     {
         $this->imageFile = $image;
-
-        if($image){
+    
+        if ($image) {
             $this->dateModification = new \DateTime('now');
         }
     }
@@ -261,37 +254,6 @@ class Produit
         return $this->slug;
     }
 
-    /**
-     * @return Collection|ProduitCategorie[]
-     */
-    public function getProduitCategories(): Collection
-    {
-        return $this->produitCategories;
-    }
-
-    public function addProduitCategory(ProduitCategorie $produitCategory): self
-    {
-        if (!$this->produitCategories->contains($produitCategory)) {
-            $this->produitCategories[] = $produitCategory;
-            $produitCategory->setProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduitCategory(ProduitCategorie $produitCategory): self
-    {
-        if ($this->produitCategories->contains($produitCategory)) {
-            $this->produitCategories->removeElement($produitCategory);
-            // set the owning side to null (unless already changed)
-            if ($produitCategory->getProduit() === $this) {
-                $produitCategory->setProduit(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getDateEnregistrement(): ?\DateTimeInterface
     {
         return $this->dateEnregistrement;
@@ -299,34 +261,6 @@ class Produit
     public function __toString()
     {
         return $this->titre;
-    }
-
-    /**
-     * @return Collection|ProduitCommande[]
-     */
-    public function getProduitCommandes(): Collection
-    {
-        return $this->produitCommandes;
-    }
-
-    public function addProduitCommande(ProduitCommande $produitCommande): self
-    {
-        if (!$this->produitCommandes->contains($produitCommande)) {
-            $this->produitCommandes[] = $produitCommande;
-            $produitCommande->addProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduitCommande(ProduitCommande $produitCommande): self
-    {
-        if ($this->produitCommandes->contains($produitCommande)) {
-            $this->produitCommandes->removeElement($produitCommande);
-            $produitCommande->removeProduit($this);
-        }
-
-        return $this;
     }
 
     public function getDateModification(): ?\DateTimeInterface
@@ -361,6 +295,30 @@ class Produit
                 $promotion->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSousCategorie(): ?SousCategorie
+    {
+        return $this->sousCategorie;
+    }
+
+    public function setSousCategorie(?SousCategorie $sousCategorie): self
+    {
+        $this->sousCategorie = $sousCategorie;
+
+        return $this;
+    }
+
+    public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(?Commande $commande): self
+    {
+        $this->commande = $commande;
 
         return $this;
     }

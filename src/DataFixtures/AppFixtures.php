@@ -5,7 +5,9 @@ namespace App\DataFixtures;
 use Faker\Factory;
 use App\Entity\Produit;
 use App\Entity\Categorie;
+use App\Entity\Promotion;
 use App\Entity\SousCategorie;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -41,18 +43,25 @@ class AppFixtures extends Fixture
             $indice = rand(0,2);
 
             $produit->setTitre($titre)
-                    ->setReference($faker->sentence(1))
                     ->setCouleur($faker->sentence(1))
                     ->setPublic($public[$indice])
                     ->setDescription($description)
-                    ->setphoto('http://placehold.it/600x600')
+                    ->setphoto('5ede4521d52e3829267052.jpg')
                     ->setPrix($faker->randomNumber(2))
                     ->setStock($faker->randomDigit())
-                    ->setTaille($taille[$indice]);
+                    ->setTaille($taille[$indice])
+                    ->setSousCategorie($sousCategorie);
                     $manager->persist($produit);
+
+                    $promotion = new Promotion();
+                    $indice = rand(15,100);
+                    $promotion->setPrix($indice)
+                            ->setProduit($produit);
+                            $manager->persist($promotion);
                 }
             }
         }  
+        // créer entre 6 et 10 produit pour chaque sous categorie
         $manager->flush();
     }
 }

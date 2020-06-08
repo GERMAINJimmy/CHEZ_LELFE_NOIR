@@ -84,8 +84,7 @@ class User implements UserInterface
     private $ville;
 
     /**
-     * @var \DateTime $dateEnregistrement
-     * 
+     * @var \DateTime $dateEnregistrement 
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
     */
@@ -106,6 +105,11 @@ class User implements UserInterface
     {
         $this->commandes = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->username;
     }
 
     public function getId(): ?int

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Promotion;
+use App\Entity\Produit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,7 +19,6 @@ class PromotionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Promotion::class);
     }
-
     // /**
     //  * @return Promotion[] Returns an array of Promotion objects
     //  */

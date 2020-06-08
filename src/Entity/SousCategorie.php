@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -35,14 +34,13 @@ class SousCategorie
     private $categorie;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProduitCategorie", mappedBy="sousCategorie", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="sousCategorie")
      */
-    private $produitCategories;
+    private $produits;
 
     public function __construct()
     {
-        $this->produitCategories = new ArrayCollection();
-        $this->atelierCategories = new ArrayCollection();
+        $this->produits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,39 +71,39 @@ class SousCategorie
 
         return $this;
     }
-
-    /**
-     * @return Collection|ProduitCategorie[]
-     */
-    public function getProduitCategories(): Collection
+    public function __toString()
     {
-        return $this->produitCategories;
+        return $this->titre;
     }
 
-    public function addProduitCategory(ProduitCategorie $produitCategory): self
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getProduits(): Collection
     {
-        if (!$this->produitCategories->contains($produitCategory)) {
-            $this->produitCategories[] = $produitCategory;
-            $produitCategory->setSousCategorie($this);
+        return $this->produits;
+    }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits[] = $produit;
+            $produit->setSousCategorie($this);
         }
 
         return $this;
     }
 
-    public function removeProduitCategory(ProduitCategorie $produitCategory): self
+    public function removeProduit(Produit $produit): self
     {
-        if ($this->produitCategories->contains($produitCategory)) {
-            $this->produitCategories->removeElement($produitCategory);
+        if ($this->produits->contains($produit)) {
+            $this->produits->removeElement($produit);
             // set the owning side to null (unless already changed)
-            if ($produitCategory->getSousCategorie() === $this) {
-                $produitCategory->setSousCategorie(null);
+            if ($produit->getSousCategorie() === $this) {
+                $produit->setSousCategorie(null);
             }
         }
 
         return $this;
-    }
-    public function __toString()
-    {
-        return $this->titre;
     }
 }

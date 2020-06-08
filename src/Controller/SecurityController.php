@@ -31,5 +31,6 @@ class SecurityController extends AbstractController
      */
     public function deconnexion()
     {
+        return $this->redirectToRoute('accueil');
     }
 }

@@ -75,19 +75,7 @@
                     </li>
                     {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item mx-4 dropdown">
-                        <a class="nav-link dropdown-toggle" href="{{ path('admin_produit') }}" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-cogs"></i> Gestion de la Boutique
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#"><i class="fas fa-users-cog"></i> Gestion des membres</a>
-                            <a class="dropdown-item" href="#">Gestion des commentaires</a>
-                            <a class="dropdown-item" href="#">Gestion des catégories</a>
-                            <a class="dropdown-item" href="{{ path ('admin_produit')}}">Gestion des produits</a>
-                            <a class="dropdown-item" href="{{ path ('admin_atelier')}}">Gestion des ateliers</a>
-                            <a class="dropdown-item" href="#">Gestion du stock</a>
-                            <a class="dropdown-item" href="#">Gestion des commandes</a>
-                        </div>
+                        <a class="nav-link" href="{{ path('easyadmin')}}">Gestion de la Boutique</a>
                     </li>
                     {% endif %}
                 </ul>

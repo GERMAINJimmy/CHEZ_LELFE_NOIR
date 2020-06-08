@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -24,7 +22,8 @@ class Atelier
      */
     private $id;
 
-    /**
+    /**     
+     * @Gedmo\Slug(fields={"titre"})
      * @ORM\Column(type="string", length=50)
      * Assert\EqualTo("{{ $titre }}	")
      */
@@ -59,22 +58,22 @@ class Atelier
      */
     private $description;
 
-/**
- * @ORM\Column(type="string", length=255)
- * @var string
- * @Assert\Image(
- *     minWidth = 600,
- *     maxWidth = 600,
- *     minHeight = 600,
- *     maxHeight = 600)
- */
-private $photo;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string
+     * @Assert\Image(
+     *     minWidth = 600,
+     *     maxWidth = 600,
+     *     minHeight = 600,
+     *     maxHeight = 600)
+     */
+    private $photo;
 
-/**
- * @Vich\UploadableField(mapping="featured_images", fileNameProperty="featured_image")
- * @var File
- */
-private $imageFile;
+    /**
+     * @Vich\UploadableField(mapping="photo", fileNameProperty="photo")
+     * @var File
+     */
+    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -94,16 +93,6 @@ private $imageFile;
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AtelierCommande", mappedBy="atelier")
-     */
-    private $atelierCommandes;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AtelierCategorie", mappedBy="atelier", orphanRemoval=true)
-     */
-    private $atelierCategories;
-
-    /**
      * @var \DateTime $dateEnregistrement
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
@@ -117,10 +106,19 @@ private $imageFile;
      */
     private $dateModification;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="ateliers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Commande::class, inversedBy="atelier")
+     */
+    private $commande;
+
     public function __construct()
     {
-        $this->atelierCommandes = new ArrayCollection();
-        $this->atelierCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,13 +129,6 @@ private $imageFile;
     public function getReference(): ?string
     {
         return $this->reference;
-    }
-
-    public function setReference(string $reference): self
-    {
-        $this->reference = $reference;
-
-        return $this;
     }
 
     public function getTitre(): ?string
@@ -254,68 +245,6 @@ private $imageFile;
         return $this->slug;
     }
 
-    /**
-     * @return Collection|AtelierCommande[]
-     */
-    public function getAtelierCommandes(): Collection
-    {
-        return $this->atelierCommandes;
-    }
-
-    public function addAtelierCommande(AtelierCommande $atelierCommande): self
-    {
-        if (!$this->atelierCommandes->contains($atelierCommande)) {
-            $this->atelierCommandes[] = $atelierCommande;
-            $atelierCommande->setAtelier($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAtelierCommande(AtelierCommande $atelierCommande): self
-    {
-        if ($this->atelierCommandes->contains($atelierCommande)) {
-            $this->atelierCommandes->removeElement($atelierCommande);
-            // set the owning side to null (unless already changed)
-            if ($atelierCommande->getAtelier() === $this) {
-                $atelierCommande->setAtelier(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|AtelierCategorie[]
-     */
-    public function getAtelierCategories(): Collection
-    {
-        return $this->atelierCategories;
-    }
-
-    public function addAtelierCategory(AtelierCategorie $atelierCategory): self
-    {
-        if (!$this->atelierCategories->contains($atelierCategory)) {
-            $this->atelierCategories[] = $atelierCategory;
-            $atelierCategory->setAtelier($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAtelierCategory(AtelierCategorie $atelierCategory): self
-    {
-        if ($this->atelierCategories->contains($atelierCategory)) {
-            $this->atelierCategories->removeElement($atelierCategory);
-            // set the owning side to null (unless already changed)
-            if ($atelierCategory->getAtelier() === $this) {
-                $atelierCategory->setAtelier(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getDateEnregistrement(): ?\DateTimeInterface
     {
         return $this->dateEnregistrement;
@@ -328,5 +257,29 @@ private $imageFile;
     public function getDateModification(): ?\DateTimeInterface
     {
         return $this->dateModification;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(?Commande $commande): self
+    {
+        $this->commande = $commande;
+
+        return $this;
     }
 }

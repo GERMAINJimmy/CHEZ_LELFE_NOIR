@@ -36,16 +36,6 @@ class Commande
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProduitCommande", mappedBy="commmande")
-     */
-    private $produitCommandes;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AtelierCommande", mappedBy="commande")
-     */
-    private $atelierCommandes;
-
-    /**
      * @var \DateTime $dateEnregistrement
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
@@ -59,10 +49,20 @@ class Commande
      */
     private $dateModification;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="commande")
+     */
+    private $produit;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Atelier::class, mappedBy="commande")
+     */
+    private $atelier;
+
     public function __construct()
     {
-        $this->produitCommandes = new ArrayCollection();
-        $this->atelierCommandes = new ArrayCollection();
+        $this->produit = new ArrayCollection();
+        $this->atelier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,68 +106,6 @@ class Commande
         return $this;
     }
 
-    /**
-     * @return Collection|ProduitCommande[]
-     */
-    public function getProduitCommandes(): Collection
-    {
-        return $this->produitCommandes;
-    }
-
-    public function addProduitCommande(ProduitCommande $produitCommande): self
-    {
-        if (!$this->produitCommandes->contains($produitCommande)) {
-            $this->produitCommandes[] = $produitCommande;
-            $produitCommande->setCommmande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduitCommande(ProduitCommande $produitCommande): self
-    {
-        if ($this->produitCommandes->contains($produitCommande)) {
-            $this->produitCommandes->removeElement($produitCommande);
-            // set the owning side to null (unless already changed)
-            if ($produitCommande->getCommmande() === $this) {
-                $produitCommande->setCommmande(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|AtelierCommande[]
-     */
-    public function getAtelierCommandes(): Collection
-    {
-        return $this->atelierCommandes;
-    }
-
-    public function addAtelierCommande(AtelierCommande $atelierCommande): self
-    {
-        if (!$this->atelierCommandes->contains($atelierCommande)) {
-            $this->atelierCommandes[] = $atelierCommande;
-            $atelierCommande->setCommande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAtelierCommande(AtelierCommande $atelierCommande): self
-    {
-        if ($this->atelierCommandes->contains($atelierCommande)) {
-            $this->atelierCommandes->removeElement($atelierCommande);
-            // set the owning side to null (unless already changed)
-            if ($atelierCommande->getCommande() === $this) {
-                $atelierCommande->setCommande(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getDateEnregistrement(): ?\DateTimeInterface
     {
         return $this->dateEnregistrement;
@@ -176,5 +114,67 @@ class Commande
     public function getDateModification(): ?\DateTimeInterface
     {
         return $this->dateModification;
+    }
+
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getProduit(): Collection
+    {
+        return $this->produit;
+    }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->produit->contains($produit)) {
+            $this->produit[] = $produit;
+            $produit->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->produit->contains($produit)) {
+            $this->produit->removeElement($produit);
+            // set the owning side to null (unless already changed)
+            if ($produit->getCommande() === $this) {
+                $produit->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Atelier[]
+     */
+    public function getAtelier(): Collection
+    {
+        return $this->atelier;
+    }
+
+    public function addAtelier(Atelier $atelier): self
+    {
+        if (!$this->atelier->contains($atelier)) {
+            $this->atelier[] = $atelier;
+            $atelier->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAtelier(Atelier $atelier): self
+    {
+        if ($this->atelier->contains($atelier)) {
+            $this->atelier->removeElement($atelier);
+            // set the owning side to null (unless already changed)
+            if ($atelier->getCommande() === $this) {
+                $atelier->setCommande(null);
+            }
+        }
+
+        return $this;
     }
 }

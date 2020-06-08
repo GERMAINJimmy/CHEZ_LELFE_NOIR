@@ -14,6 +14,8 @@ easy_admin:
         menu:
             - { label: 'Produits' }
             - { entity: 'Produit', label: 'Produit', icon: 'book' }
+            - { label: 'Promotions' }
+            - { entity: 'Promotion', label: 'Promotion', icon: 'book' }
             - { label: 'Ateliers' }
             - { entity: 'Atelier', label: 'Atelier', icon: 'book' }
             - { label: 'Categorie' }
@@ -21,13 +23,113 @@ easy_admin:
             - { entity: 'SousCategorie', label: 'SousCategorie', icon: 'tag' }
             - { label: 'Utilisateurs' }
             - { entity: 'User', label: 'Utilisateurs', icon: 'user' }
+            - { label: 'Commentaire' }
+            - { entity: 'Commentaire', label: 'Commentaire', icon: 'user' }
     formats:
         # Ici on définit le format des dates
         datetime: 'd/m/Y à H:i'
     entities:
         # List the entity class name you want to manage
-        - App\Entity\Produit
-        - App\Entity\Atelier
-        - App\Entity\Categorie
-        - App\Entity\SousCategorie
-        - App\Entity\User
+         Produit:
+            # Correspond au fichier Produit.php
+            class: App\Entity\Produit
+            # On définit ci-dessous le contenu de la liste qui affichera les produits et les critères de tri
+            list:
+                fields:
+                    - id
+                    - titre
+                    - couleur
+                    - public
+                    # Le champ ci-dessous affichera l'image de l'article
+                    - { property: 'photo', label: 'Image', type: 'image', base_path: '%app.path.photo%' }
+                    - prix
+                    - taille
+                    - stock
+                    - { property: 'dateEnregistrement', label: 'Créé' }
+                sort: ['dateEnregistrement', 'desc']
+            # On définit ci-dessous le contenu du formulaire d'ajout ou modification d'article
+            form:
+                fields:
+                    - titre
+                    - couleur
+                    - { property: 'public', label: 'public', type: choice, type_options: {expanded: true, choices: {'Homme':'m', 'Femme':'f','Mixte':'mixte'}}}
+                    # Affichage de l'éditeur Wysiwyg
+                    - { property: 'description', type: 'fos_ckeditor', type_options: { config_name: 'main_config' }}
+                    # Affichage du champ d'ajout d'image
+                    - { property: 'imageFile', type: 'vich_image', label: 'Image' }
+                    - prix
+                    - stock
+                    - { property: 'taille', label: 'taille', type: choice, type_options: {expanded: true, choices: {'XS':'xs','S':'s','M':'m','L':'l','XL':'xl','XXL':'xxl'}}}
+                    - { property: 'sousCategorie', label: 'Sous Catégorie', type: 'entity', type_options: { class: 'App\Entity\SousCategorie', by_reference: false, attr: { data-widget: 'select2' }}}
+         Promotion:
+            # Correspond au fichier Promotion.php
+            class: App\Entity\Promotion
+            list:
+                fields:
+                    - id
+                    - produit
+                    - prix
+                    - { property: 'dateEnregistrement', label: 'Date Enregistrement'}
+                sort: ['dateEnregistrement', 'desc']
+            form:
+                fields:
+                    - { property: 'produit', label: 'Produit', type: 'entity', type_options: { class: 'App\Entity\Produit', by_reference: false, attr: { data-widget: 'select2' }}}
+                    - prix
+         Atelier:
+            # Correspond au fichier Atelier.php
+            class: App\Entity\Atelier
+            # On définit ci-dessous le contenu de la liste qui affichera les Ateliers et les critères de tri
+            list:
+                fields:
+                    - id
+                    - titre
+                    - duree
+                    - public
+                    - place
+                    - prix
+                sort: ['dateEnregistrement', 'desc']
+            # On définit ci-dessous le contenu du formulaire d'ajout ou modification d'article
+            form:
+                fields:
+                    - titre
+                    - duree
+                    - { property: 'public', label: 'public', type: choice, type_options: {expanded: true, choices: {'Adulte':'adulte', 'Enfant':'enfant','Mixte':'mixte'}}}
+                    - place
+                    # Affichage de l'éditeur Wysiwyg
+                    - { property: 'description', type: 'fos_ckeditor', type_options: { config_name: 'main_config' }}
+                    # Affichage du champ d'ajout d'image
+                    - { property: 'imageFile', type: 'vich_image', label: 'Image' }
+                    - prix
+                    - { property: 'categorie', label: 'Catégorie', type: 'entity', type_options: { class: 'App\Entity\Categorie', by_reference: false, attr: { data-widget: 'select2' }}}
+         Categorie:
+            # Correspond au fichier Categorie.php
+            class: App\Entity\Categorie
+         SousCategorie:
+            # Correspond au fichier SousCategorie.php
+            class: App\Entity\SousCategorie
+            # Correspond au fichier User.php
+         User:
+            class: App\Entity\User
+            label: 'Utilisateurs'
+            list:
+                fields:
+                    - id
+                    - username
+                    - email
+                    - { property: 'roles', label: 'Rôles', type: json_array}
+            form:
+                fields:
+                    - { property: 'username', label: 'Pseudo'}
+                    - { property: 'password', label: 'Mot de passe'}
+                    - { property: 'civilite', label: 'civilite', type: choice, type_options: {expanded: true, choices: {'Monsieur':'Mr', 'Madame':'Mme','Entreprise':'entreprise'}}}
+                    - nom
+                    - prenom
+                    - email
+                    - telephone
+                    - adresse
+                    - codePostal
+                    - ville
+                    - { property: 'roles', label: 'Rôles', type: choice, type_options: {expanded: true, multiple: true, choices: {'Utilisateur':'ROLE_USER', 'Administrateur':'ROLE_ADMIN'}}}
+         Commentaire:
+            # Correspond au fichier Commentaire.php
+            class: App\Entity\Commentaire
