@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block contenu_central %}
+<div class="row nouveaute  my-4 mx-2">
+    <img class="mb-2" src="{{ asset('/photo/haut_grand_parchemin.jpg')}}" alt="nouveaute" />
+    <div class="mx-2">
+    <h1>Page non trouvée</h1>
+    <p>La page que vous cherchez n'a pas été trouvée</p>
+    <p>Le code est : {{status_code}}</p>
+    <p>Le texte est : {{status_text}}</p>
+    {{exception.message}}
+    </div>
+    <img class="mt-2" src="{{ asset('/photo/bas_nouveaute.jpg')}}" alt="bas de nouveaute" />
+</div>
+{% endblock %}

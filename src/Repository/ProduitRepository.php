@@ -19,6 +19,24 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
     
+    /*public function findAllCategories()
+    {
+        // Pas besoin de from, on est dans Produit lié à la table produit
+        return $this->createQueryBuilder('p')
+                    -> select('p.categorie')
+                    -> distinct(true)
+                    -> orderBy('p.categorie', 'ASC')
+                    -> getQuery()
+                    -> getResult();
+    }
+
+    public function findAllCategories2()
+    {
+        $manager = $this->getEntityManager();
+        $query = $manager -> createQuery("SELECT DISTINCT p.categorie FROM App\Entity\Produit p ORDER BY p.categorie ASC"); 
+        return $query->getResult();
+    }
+    */
     // /**
     //  * @return Produit[] Returns an array of Produit objects
     //  */

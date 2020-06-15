@@ -47,6 +47,26 @@ class Commentaire
      */
     private $dateModification;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="commentaires")
+     */
+    private $produit;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $actif;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $rgpd;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Atelier::class, inversedBy="commentaires")
+     */
+    private $atelier;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -100,5 +120,53 @@ class Commentaire
     public function getDateModification(): ?\DateTimeInterface
     {
         return $this->dateModification;
+    }
+
+    public function getProduit(): ?Produit
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(?Produit $produit): self
+    {
+        $this->produit = $produit;
+
+        return $this;
+    }
+
+    public function getActif(): ?bool
+    {
+        return $this->actif;
+    }
+
+    public function setActif(bool $actif): self
+    {
+        $this->actif = $actif;
+
+        return $this;
+    }
+
+    public function getRgpd(): ?bool
+    {
+        return $this->rgpd;
+    }
+
+    public function setRgpd(bool $rgpd): self
+    {
+        $this->rgpd = $rgpd;
+
+        return $this;
+    }
+
+    public function getAtelier(): ?Atelier
+    {
+        return $this->atelier;
+    }
+
+    public function setAtelier(?Atelier $atelier): self
+    {
+        $this->atelier = $atelier;
+
+        return $this;
     }
 }

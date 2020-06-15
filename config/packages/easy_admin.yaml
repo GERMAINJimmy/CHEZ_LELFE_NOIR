@@ -60,7 +60,7 @@ easy_admin:
                     - prix
                     - stock
                     - { property: 'taille', label: 'taille', type: choice, type_options: {expanded: true, choices: {'XS':'xs','S':'s','M':'m','L':'l','XL':'xl','XXL':'xxl'}}}
-                    - { property: 'sousCategorie', label: 'Sous Catégorie', type: 'entity', type_options: { class: 'App\Entity\SousCategorie', by_reference: false, attr: { data-widget: 'select2' }}}
+                    - { property: 'sousCategorie', label: 'Sous Catégorie', type: 'entity', type_options: { class: 'App\Entity\SousCategorie', by_reference: true, attr: { data-widget: 'select2' }}}
          Promotion:
             # Correspond au fichier Promotion.php
             class: App\Entity\Promotion
@@ -73,7 +73,7 @@ easy_admin:
                 sort: ['dateEnregistrement', 'desc']
             form:
                 fields:
-                    - { property: 'produit', label: 'Produit', type: 'entity', type_options: { class: 'App\Entity\Produit', by_reference: false, attr: { data-widget: 'select2' }}}
+                    - { property: 'produit', label: 'Produit', type: 'entity', type_options: { class: 'App\Entity\Produit', by_reference: true, attr: { data-widget: 'select2' }}}
                     - prix
          Atelier:
             # Correspond au fichier Atelier.php
@@ -100,7 +100,7 @@ easy_admin:
                     # Affichage du champ d'ajout d'image
                     - { property: 'imageFile', type: 'vich_image', label: 'Image' }
                     - prix
-                    - { property: 'categorie', label: 'Catégorie', type: 'entity', type_options: { class: 'App\Entity\Categorie', by_reference: false, attr: { data-widget: 'select2' }}}
+                    - { property: 'categorie', label: 'Catégorie', type: 'entity', type_options: { class: 'App\Entity\Categorie', by_reference: true, attr: { data-widget: 'select2' }}}
          Categorie:
             # Correspond au fichier Categorie.php
             class: App\Entity\Categorie

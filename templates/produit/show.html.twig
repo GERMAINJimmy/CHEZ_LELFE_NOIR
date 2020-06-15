@@ -6,8 +6,7 @@
         <h2>{{ produit.titre }}</h2>
         <img src="{{ vich_uploader_asset(produit, 'imageFile') }}" alt="{{ produit.titre }}" class="img-fluid">
     </div>
-    <div class="col-md-3 offset-md-1">
-        <hr>
+    <div class="col-md-6 offset-md-1">
      <!-- si le produit est en promotion on modifie son tarif -->
         <p>Prix : {{ produit.prix }}</p>
         <p>Couleur : {{ produit.couleur }}</p>
@@ -16,6 +15,56 @@
         <hr>
         <a href="{{ path('produit')}}" class="btn bouton d-block mx-auto">Retour à la boutique</a>
     </div>
+    <div>
+        <br>
+        <h2 class="text-center">Les produits qui pourrait vous interesser</h2>
+        <br>
+        {% for exemple in exemples %}
+        <div class="exemple mx-4">
+    <a href="{{ path('produit_show', {'slug': exemple.slug}) }}">
+        <figure>
+            <img src="{{ vich_uploader_asset(exemple, 'imageFile') }}" alt="{{ exemple.titre }}">
+            <figcaption class="text-center">{{ exemple.titre }}<br>    
+                <!-- si le produit est en promotion on modifie son tarif -->
+            </figcaption>
+        </figure>
+    </a>
+</div>
+    {% endfor %}
+    </div>
     <img class="mt-2" src="{{ asset('/photo/bas_nouveaute.jpg')}}" alt="bas de nouveaute" />
 </div>
+            <div>
+                <div class="row nouveaute  my-4 mx-2">
+                    <img class="mb-2" src="{{ asset('/photo/haut_grand_parchemin.jpg')}}" alt="nouveaute" />
+                    <div class="mx-4">
+            <p>Commentaires : {{ commentaires|length }}</p>
+            {% for commentaire in commentaires %}
+            <hr>
+            <p>Commentaire écrit par {{ commentaire.user }} le {{ commentaire.dateEnregistrement|date }}</p>
+                <p>{{ commentaire.message }}</p>
+                <hr>
+                {% else %}
+            <p>Il n'y a pas encore de commentaire, publiez le premier !</p>
+            {% endfor %}
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <p>Vous devez vous identifiez pour laisser un commentaire, <a href="{{ path('connexion') }}" class="btn bouton">Identifiez-vous</a></p>
+                    </div>
+                        <img class="mt-2" src="{{ asset('/photo/bas_nouveaute.jpg')}}" alt="bas de nouveaute" />
+                    </div>
+                    {% else %}
+                </div>
+            </div>
+
+            {{ form_start(form) }} {# Affichera la balise <form> #}
+        
+                {{ form_row(form.note) }} {# Affichera le label et le champ du pseudo #}
+                {{ form_row(form.message) }} {# Affichera le label et le champ du pseudo #}
+                {{ form_label(form.rgpd) }} {# Affichera le label du pseudo #}
+                {{ form_widget(form.rgpd) }} {# Affichera le champ du pseudo #}
+            
+            {{ form_end(form) }} {# Affichera la balise </form> #}
+            {% endif %}
+                
+            </div>
 {% endblock %}

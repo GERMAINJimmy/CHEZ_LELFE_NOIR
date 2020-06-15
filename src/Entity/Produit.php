@@ -123,10 +123,16 @@ class Produit
      */
     private $commande;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="produit")
+     */
+    private $commentaires;
+
     public function __construct()
     {
         $this->dateEnregistrement = new \DateTime();
         $this->promotions = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -319,6 +325,37 @@ class Produit
     public function setCommande(?Commande $commande): self
     {
         $this->commande = $commande;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->contains($commentaire)) {
+            $this->commentaires->removeElement($commentaire);
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getProduit() === $this) {
+                $commentaire->setProduit(null);
+            }
+        }
 
         return $this;
     }

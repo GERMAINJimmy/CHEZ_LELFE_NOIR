@@ -16,10 +16,9 @@
     <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
     <label for="inputPassword" class='formulaire'>Mot de passe</label>
     <input type="password" name="password" id="inputPassword" class="form-control" required>
+    <a class="text-right" href="{{ path('mot_de_passe_oublie') }}">Vous avez oubliez votre mot de passe ?</a>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <div class="checkbox mb-3">
             <label for="_remember_me" class='formulaire'>Se souvenir de moi</label>

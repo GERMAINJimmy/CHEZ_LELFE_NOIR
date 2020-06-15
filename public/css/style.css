@@ -188,6 +188,30 @@ p
     background-size: contain;
     color: #826004;
 }
+/* SHOW PRODUIT */
+.exemple
+{
+    display: inline-flex;
+}
+.exemple>img
+{
+    width:100%;
+    height:100%;
+    display:block;
+}
+.exemple>a
+{
+    padding: 5px;
+    border: solid 5px #826004;
+    border-radius: 5px;
+    display: flex;
+}
+.exemple>a>figure>img
+{
+    width:150px;
+    display:block;
+    height:auto;
+}
 /* CONTENU DROITE */
 .contenu_droit>div>img
 {

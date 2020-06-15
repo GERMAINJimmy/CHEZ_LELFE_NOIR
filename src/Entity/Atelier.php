@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -117,8 +119,14 @@ class Atelier
      */
     private $commande;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="atelier")
+     */
+    private $commentaires;
+
     public function __construct()
     {
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -279,6 +287,37 @@ class Atelier
     public function setCommande(?Commande $commande): self
     {
         $this->commande = $commande;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setAtelier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->contains($commentaire)) {
+            $this->commentaires->removeElement($commentaire);
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getAtelier() === $this) {
+                $commentaire->setAtelier(null);
+            }
+        }
 
         return $this;
     }

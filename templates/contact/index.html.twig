@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% form_theme contactForm 'bootstrap_4_layout.html.twig' %}
+
+{% block contenu_central %}
+
+{{ form_start(contactForm) }}
+
+    {{ form_row (contactForm.nom) }}<br>
+    {{ form_row (contactForm.email) }}<br>
+    {{ form_row (contactForm.message) }}<br>
+    {{ form_row (contactForm.envoyer) }}<br>
+
+    {{ form_end(contactForm) }}<br>
+
+{% endblock %}
