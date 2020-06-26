@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chez l'elfe noir</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('/css/style.css')}}">
@@ -32,12 +33,10 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Boutique
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="menu">
                             <a class="dropdown-item" href="{{ path('produit')}}">Tous les produits</a>
                             <!-- boucle categorie_produit -->
-                            {% set variable = "Valeur" %}
-
-                            {% dump(variable) %}
+                            
                             <!-- fin boucle categorie_produit -->
                         </div>
                     </li>
@@ -74,7 +73,7 @@
                     </li>
                     {% endif %}
                     <li class="nav-item mx-4 ">
-                        <a class="nav-link" href=""><i class="fas fa-shopping-cart"></i></a>
+                        <a class="nav-link" href="{{ path('panier')}}"><i class="fas fa-shopping-cart"></i></a>
                     </li>
                     {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item mx-4 dropdown">
@@ -108,13 +107,13 @@
                     <div class="row">
                         <img class="colonne" src="{{ asset('/photo/herse.jpg')}}" alt="herse" />
                     </div>
-                    {% block contenu_central %}
                     {% for message in app.flashes('success')  %}
             <div class="alert alert-success">{{ message | raw }}</div>     <!-- raw permet d'interpreter les balises html -->
         {% endfor %}
         {% for message in app.flashes('errors')  %}
             <div class="alert alert-danger">{{ message | raw }}</div>
         {% endfor %}
+                    {% block contenu_central %}
                             
                     {% endblock %}
                 </div>

@@ -50,19 +50,13 @@ class Commande
     private $dateModification;
 
     /**
-     * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="commande")
+     * @ORM\OneToMany(targetEntity=ProduitCommande::class, mappedBy="commande")
      */
-    private $produit;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Atelier::class, mappedBy="commande")
-     */
-    private $atelier;
+    private $produitCommandes;
 
     public function __construct()
     {
-        $this->produit = new ArrayCollection();
-        $this->atelier = new ArrayCollection();
+        $this->produitCommandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,61 +111,30 @@ class Commande
     }
 
     /**
-     * @return Collection|Produit[]
+     * @return Collection|ProduitCommande[]
      */
-    public function getProduit(): Collection
+    public function getProduitCommandes(): Collection
     {
-        return $this->produit;
+        return $this->produitCommandes;
     }
 
-    public function addProduit(Produit $produit): self
+    public function addProduitCommande(ProduitCommande $produitCommande): self
     {
-        if (!$this->produit->contains($produit)) {
-            $this->produit[] = $produit;
-            $produit->setCommande($this);
+        if (!$this->produitCommandes->contains($produitCommande)) {
+            $this->produitCommandes[] = $produitCommande;
+            $produitCommande->setCommande($this);
         }
 
         return $this;
     }
 
-    public function removeProduit(Produit $produit): self
+    public function removeProduitCommande(ProduitCommande $produitCommande): self
     {
-        if ($this->produit->contains($produit)) {
-            $this->produit->removeElement($produit);
+        if ($this->produitCommandes->contains($produitCommande)) {
+            $this->produitCommandes->removeElement($produitCommande);
             // set the owning side to null (unless already changed)
-            if ($produit->getCommande() === $this) {
-                $produit->setCommande(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Atelier[]
-     */
-    public function getAtelier(): Collection
-    {
-        return $this->atelier;
-    }
-
-    public function addAtelier(Atelier $atelier): self
-    {
-        if (!$this->atelier->contains($atelier)) {
-            $this->atelier[] = $atelier;
-            $atelier->setCommande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAtelier(Atelier $atelier): self
-    {
-        if ($this->atelier->contains($atelier)) {
-            $this->atelier->removeElement($atelier);
-            // set the owning side to null (unless already changed)
-            if ($atelier->getCommande() === $this) {
-                $atelier->setCommande(null);
+            if ($produitCommande->getCommande() === $this) {
+                $produitCommande->setCommande(null);
             }
         }
 

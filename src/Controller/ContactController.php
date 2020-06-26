@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class ContactController extends AbstractController
 {
     /**
@@ -31,7 +32,7 @@ class ContactController extends AbstractController
             // On crée le texte avec la vue
             ->setBody(
                     $this->renderView(
-                        'email/contact.html.twig', compact('contact')
+                        'emails/contact.html.twig', compact('contact')
                     ),
                     'text/html'
                 )

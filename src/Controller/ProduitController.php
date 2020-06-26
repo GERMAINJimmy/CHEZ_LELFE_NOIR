@@ -24,12 +24,13 @@ class ProduitController extends AbstractController
         // Méthode findBy qui permet de récupérer les données avec des critères de filtre et de tri
         $donnees = $this->getDoctrine()->getRepository(Produit::class)->findBy([], ['dateEnregistrement' => 'desc']);
 
-
         //On appele la liste de tout les produitss
         $nouveautes = $repo->findBy([], ['dateEnregistrement' => 'desc'], $limit = 3);
         $promotions = $this->getDoctrine()->getRepository(Promotion::class)->findBy([], ['dateModification' => 'desc'], $limit = 3);
-        // $promotions = $this->getDoctrine()->getRepository(Promotion::class)->findAllPromotion();
+        //$ristourne = $this->getDoctrine()->getRepository(Promotion::class)->findAll();
         $promos = $this->getDoctrine()->getRepository(Promotion::class)->findPrixPromotion();
+
+        
         //On met en place la pagination
         $produits = $paginator->paginate($donnees, $request->query->getInt('page', 1), 12);
         //dd($promotions);
@@ -37,7 +38,9 @@ class ProduitController extends AbstractController
             'produits' => $produits,
             'nouveautes' => $nouveautes,
             'promotions' => $promotions,
+            // 'ristourne' => $ristourne,
             'promos' => $promos,
+
         ]);
     }
     /**
@@ -55,7 +58,8 @@ class ProduitController extends AbstractController
         ], ['dateEnregistrement' => 'desc']);
 
         // On recupere les produits similaires
-        $exemples = $this->getDoctrine()->getRepository(Produit::class)->findBy([], ['dateEnregistrement' => 'desc'], $limit = 3);
+        $random = rand(1,100);
+        $exemples = $this->getDoctrine()->getRepository(Produit::class)->findBy([], ['dateEnregistrement' => 'desc'], $limit = 3, $offset = $random);
 
 
         if (!$produit) {

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% set panier = app.session.get('panier') %}
+
+{# 
+    {{ dump(panier[i]['produit']) }}          => ieme objet produit
+    {{ dump(panier[i]['nbExemplaires']) }}    => nbExemplaire du ieme objet produit
+#}
+
+{% block contenu_central %}
+<h1>Mon panier</H1>
+    <table class="table table-dark table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Photo</th>
+                <th>Titre</th>
+                <th>Prix Unitaire</th>
+                <th>Nb Exemplaires</th>
+                <th>Total</th>
+                <th>Suppression</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produit in panier %}
+                <tr>
+                    <td><img src="{{ vich_uploader_asset(produit['produit'], 'imageFile') }}" alt="{{ produit['produit'].titre }}" height="80px"></td>
+                    <td>{{ produit['produit'].titre }}</td>
+                    <td>{{ produit['produit'].prix }} €</td>
+                    <td>{{ produit['nbExemplaires'] }}</td>
+                    <td>{{ produit['produit'].prix * produit['nbExemplaires'] }} €</td>
+                    <td><a onclick="return confirm('Etes-vous sûr de vouloir supprimer ce produit ?')" href=""><i class="fas fa-trash-alt"></i></a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{# <a href="{{ path('panier_validation') }}" class="btn btn-success d-block mx-auto">Valider le panier</a> #}
+<a href="{{ path('panier_valider') }}" class="btn bouton d-block mx-auto">Valider le panier</a><br>
+<a href="{{ path('panier_vider') }}" class="btn bouton d-block mx-auto">Vider le panier</a><br>
+<a href="{{ path('produit') }}" class="btn bouton d-block mx-auto">Retour à la boutique</a><br>
+
+
+{% endblock %}

@@ -30,19 +30,22 @@ class CommentaireController extends AbstractController
             if($form->isSubmitted() && $form->isValid()){
                 // si le commentaire n'existe pas initalise la date d'enregistrement
                 if(!$commentaire->getId()){
-                    $commentaire->setDateEnregistrement(new \DateTime());
+                    $commentaire->setDateEnregistrement(new \DateTime())
+                    ->setUser($session->get('username'));
                 }
                 // le manager se prepare a enregistrer l'article
                 $manager->persist($commentaire);
                 // le manager envoie la requete à la base
                 $manager->flush();
                 // redirection automatique 
+                $this->addFlash('success', 'Votre commentaire a été transmis, nous le publierons après validation par l\administrateur.');// Permet un message flash de renvoi
                 return $this->redirectToRoute('commentaire/index.html.twig',[
                     // on envoi l'id du commentaire
                     'id' => $commentaire->getId()
                 ]);
+            }else{
+                $this->addFlash('errors', 'Votre message n\'a pas été transmis, toutes nos excuses.'); // Permet un message flash de renvoi
             }
-            
             return $this->render('commentaire/commentaire_form.html.twig',[
                 'formCommentaire' => $form->createView(),
                 'editMode' => $commentaire->getId() !== null,

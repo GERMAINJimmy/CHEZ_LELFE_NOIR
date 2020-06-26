@@ -13,6 +13,32 @@
         <p>Taille : {{ produit.taille }}</p>
         <p>Description : {{ produit.description | raw }}</p>
         <hr>
+                    {% if (produit.stock | length<=0 ) %}
+                        <div class="alert alert-info">Produit en cours de réapprovisionnement</div>
+                    {% else %}
+                        <form action="{{ path('panier_add',{'id': produit.id} ) }}" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-4">
+                                    <label for="quantite">Quantité</label>
+                                    <select class="form-control" id="quantite" name="quantite">
+                                        {% for i in 1..min(5,produit.stock) %}
+                                            <option>{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-8">
+                                    <label>&nbsp;</label>
+                                    {# <a href="{{ path('panier_add',{'id': produit.id, 'nbExemplaires' : 2} ) }}" class="btn btn-success d-block mx-auto">Ajout au panier</a> #}
+                                    <input type="submit" class="btn btn-success form-control" value="Ajout au panier">
+                                </div>
+                            </div>
+                        </form>
+
+                        {# {{ form_start(panierAddForm) }}
+                            {{ form_rest(panierAddForm) }}
+                            <input type="submit" value="Ajouter au panier" class="btn btn-success">
+                        {{ form_end(panierAddForm) }} #}
+                    {% endif %}
         <a href="{{ path('produit')}}" class="btn bouton d-block mx-auto">Retour à la boutique</a>
     </div>
     <div>
@@ -42,7 +68,7 @@
             {% for commentaire in commentaires %}
             <hr>
             <p>Commentaire écrit par {{ commentaire.user }} le {{ commentaire.dateEnregistrement|date }}</p>
-                <p>{{ commentaire.message }}</p>
+                <p>{{ commentaire.message|raw }}</p>
                 <hr>
                 {% else %}
             <p>Il n'y a pas encore de commentaire, publiez le premier !</p>
@@ -58,10 +84,10 @@
 
             {{ form_start(form) }} {# Affichera la balise <form> #}
         
-                {{ form_row(form.note) }} {# Affichera le label et le champ du pseudo #}
-                {{ form_row(form.message) }} {# Affichera le label et le champ du pseudo #}
-                {{ form_label(form.rgpd) }} {# Affichera le label du pseudo #}
-                {{ form_widget(form.rgpd) }} {# Affichera le champ du pseudo #}
+                {{ form_row(form.note) }} {# Affichera le label et le champ du note #}
+                {{ form_row(form.message) }} {# Affichera le label et le champ du message #}
+                {{ form_label(form.rgpd) }} {# Affichera le label du rgpd #}
+                {{ form_widget(form.rgpd) }} {# Affichera le champ du rgpd #}
             
             {{ form_end(form) }} {# Affichera la balise </form> #}
             {% endif %}

@@ -119,20 +119,21 @@ class Produit
     private $sousCategorie;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Commande::class, inversedBy="produit")
-     */
-    private $commande;
-
-    /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="produit")
      */
     private $commentaires;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ProduitCommande::class, mappedBy="produit")
+     */
+    private $produitCommandes;
 
     public function __construct()
     {
         $this->dateEnregistrement = new \DateTime();
         $this->promotions = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->produitCommandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -317,18 +318,6 @@ class Produit
         return $this;
     }
 
-    public function getCommande(): ?Commande
-    {
-        return $this->commande;
-    }
-
-    public function setCommande(?Commande $commande): self
-    {
-        $this->commande = $commande;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Commentaire[]
      */
@@ -354,6 +343,37 @@ class Produit
             // set the owning side to null (unless already changed)
             if ($commentaire->getProduit() === $this) {
                 $commentaire->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProduitCommande[]
+     */
+    public function getProduitCommandes(): Collection
+    {
+        return $this->produitCommandes;
+    }
+
+    public function addProduitCommande(ProduitCommande $produitCommande): self
+    {
+        if (!$this->produitCommandes->contains($produitCommande)) {
+            $this->produitCommandes[] = $produitCommande;
+            $produitCommande->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduitCommande(ProduitCommande $produitCommande): self
+    {
+        if ($this->produitCommandes->contains($produitCommande)) {
+            $this->produitCommandes->removeElement($produitCommande);
+            // set the owning side to null (unless already changed)
+            if ($produitCommande->getProduit() === $this) {
+                $produitCommande->setProduit(null);
             }
         }
 

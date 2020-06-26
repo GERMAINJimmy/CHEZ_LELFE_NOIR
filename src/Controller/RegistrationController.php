@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
-
 class RegistrationController extends AbstractController
 {
     /**
@@ -51,7 +50,7 @@ class RegistrationController extends AbstractController
             // On crée le texte avec la vue
             ->setBody(
                 $this->renderView(
-                    'email/activation.html.twig', ['token' => $user->getActivationToken()]
+                    'emails/activation.html.twig', ['token' => $user->getActivationToken()]
                 ),
                 'text/html'
             )

@@ -18,8 +18,8 @@ class ProduitRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Produit::class);
     }
-    
-    /*public function findAllCategories()
+    /*
+    public function findAllCategories()
     {
         // Pas besoin de from, on est dans Produit lié à la table produit
         return $this->createQueryBuilder('p')
@@ -29,7 +29,8 @@ class ProduitRepository extends ServiceEntityRepository
                     -> getQuery()
                     -> getResult();
     }
-
+    */
+/*
     public function findAllCategories2()
     {
         $manager = $this->getEntityManager();

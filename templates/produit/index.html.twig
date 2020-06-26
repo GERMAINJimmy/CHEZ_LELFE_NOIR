@@ -8,12 +8,12 @@
             <img src="{{ vich_uploader_asset(nouveaute, 'imageFile') }}" alt="{{ nouveaute.titre }}">
             <figcaption class="text-center">{{ nouveaute.titre }}<br>
                 <!-- si le produit est en promotion on modifie son tarif -->
-    {% if promos == nouveaute %}
-<p><span class="prix_initiale">{{ promotion.produit.prix }}</span>  <span class="promotions"> {{ promotion.prix }} €</span></p>
-{% else %}
-<p>{{ nouveaute.prix }} €</p>
+                {% if promos == nouveaute %}
+                <p><span class="prix_initiale">{{ promotion.produit.prix }}</span>  <span class="promotions"> {{ promotion.prix }} €</span></p>
+                {% else %}
+                <p>{{ nouveaute.prix }} €</p>
     {% endif %}
-            </figcaption>
+</figcaption>
         </figure>
     </a>
     {% endfor %}
@@ -48,7 +48,7 @@
                 {% if promos == produit  %}
             <p><span class="prix_initiale">{{ promotion.produit.prix }}</span>  <span class="promotions"> {{ promotion.prix }} €</span></p>
             {% else %}
-            <p>{{ produit.prix }}</p>
+            <p>{{ produit.prix }} €</p>
             {% endif %}
             </figcaption>
         </figure>

@@ -115,11 +115,6 @@ class Atelier
     private $categorie;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Commande::class, inversedBy="atelier")
-     */
-    private $commande;
-
-    /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="atelier")
      */
     private $commentaires;
@@ -275,18 +270,6 @@ class Atelier
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
-
-        return $this;
-    }
-
-    public function getCommande(): ?Commande
-    {
-        return $this->commande;
-    }
-
-    public function setCommande(?Commande $commande): self
-    {
-        $this->commande = $commande;
 
         return $this;
     }
